@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { useGlobalContext } from '../context/AuthContext';
 
 const Movies = ({ movie }) => {
+  const { user } = useGlobalContext();
+
   const [like, setLike] = useState(false);
+
+  const saveShow = async () => {
+    if (user?.email) {
+      setLike(!like);
+    } else {
+      alert('Please log in to save a movie');
+    }
+  };
+
   return (
     <div
       className='w-[160px] sm:w-[200px] md:2-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2'
@@ -19,7 +31,7 @@ const Movies = ({ movie }) => {
           {movie?.title}
         </p>
 
-        <p>
+        <p onClick={saveShow}>
           {like ? (
             <FaHeart className='absolute top-4 left-4 text-gray-300' />
           ) : (

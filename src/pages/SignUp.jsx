@@ -4,27 +4,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context/AuthContext';
 
 const SignUp = () => {
-  const { user, logIn } = useGlobalContext();
+  const { user, signUp } = useGlobalContext();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
     try {
-      await logIn(email, password);
+      await signUp(email, password);
       navigate('/');
     } catch (error) {
       console.log(error);
-      setError(error.message);
     }
   };
   return (
     <>
-      <div className='  w-full h-screen  '>
+      <div className='w-full h-screen  '>
         <img
           src={netflixImage}
           className='hidden sm:block w-full h-full absolute object-cover'
@@ -35,10 +32,8 @@ const SignUp = () => {
           <div className='max-w-[450px] h-[600px] mx-auto bg-black/75'>
             <div className='max-w-[320px]  mx-auto py-16'>
               <h1 className='text-white text-3xl font-bold capitalize mb-6'>
-                sign in
+                sign up
               </h1>
-
-              {error ? <p className='p-3 bg-red-400 my-2'>{error}</p> : null}
 
               <form onSubmit={handleSubmit}>
                 <input
@@ -61,7 +56,7 @@ const SignUp = () => {
                   type='submit'
                   className='text-white text-centers font-bold bg-red-600 w-full py-3 outline-none rounded'
                 >
-                  Sign In
+                  Sign Up
                 </button>
 
                 <div className='flex items-center justify-between mt-6'>
@@ -77,9 +72,9 @@ const SignUp = () => {
                   </p>
                 </div>
                 <p className='text-gray-600 mt-8'>
-                  New to Netflix?{' '}
-                  <Link to='/signup' className='cursor-pointer text-white'>
-                    Sign Up
+                  Already subscribed to Netflix?{' '}
+                  <Link to='/login' className='cursor-pointer text-white'>
+                    Sign In
                   </Link>
                 </p>
               </form>
